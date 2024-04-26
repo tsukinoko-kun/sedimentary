@@ -14,6 +14,8 @@ import (
 
 var dmp = diffmatchpatch.New()
 
+// Commit creates patches for all files in she paths parameter and labels it with the message parameter.
+// All paths must be specified absolutely.
 func (sdmt *Sedimentary) Commit(paths []string, message string) error {
 	err := sdmt.transaction(func(tx *sql.Tx) error {
 		for _, path := range paths {
@@ -32,7 +34,7 @@ func (sdmt *Sedimentary) Commit(paths []string, message string) error {
 	return err
 }
 
-func (sdmt *Sedimentary) commitDir(tx *sql.Tx, path string) error {
+func (sdmt *Sedimentary) commitDir(tx dbCommon, path string) error {
 	err := filepath.WalkDir(path, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -51,7 +53,7 @@ func (sdmt *Sedimentary) commitDir(tx *sql.Tx, path string) error {
 	return nil
 }
 
-func (sdmt *Sedimentary) commitFile(tx *sql.Tx, path string) error {
+func (sdmt *Sedimentary) commitFile(tx dbCommon, path string) error {
 	{
 		fileName := filepath.Base(path)
 		if fileName == ".DS_Store" || fileName == ".sedimentary" {
