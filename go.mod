@@ -3,6 +3,7 @@ module github.com/tsukinoko-kun/sedimentary
 go 1.22.2
 
 require (
+	github.com/sergi/go-diff v1.3.1
 	github.com/spf13/cobra v1.8.0
 	modernc.org/sqlite v1.29.8
 )
